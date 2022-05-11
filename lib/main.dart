@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keep_moving/screens/login_screen/login_screen.dart';
 
 import 'screens/mainmenu.dart';
 import 'screens/splash_screen/splash_screen.dart';
@@ -21,8 +22,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         "/mainmenu": (BuildContext context) => const MainMenu(),
+        "/login": (BuildContext context) => const LoginScreen(),
       },
-      home: const SplashScreen(),
+      home: const SplashScreen()
     );
   }
 }

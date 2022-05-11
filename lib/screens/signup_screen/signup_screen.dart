@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
+import 'package:keep_moving/controller/signup_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -9,6 +11,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  final SignupController _signupController = Get.put(SignupController());
   late TextEditingController _emailController = TextEditingController();
   late TextEditingController _nameController = TextEditingController();
   late TextEditingController _phoneController = TextEditingController();
@@ -17,6 +20,8 @@ class _SignupScreenState extends State<SignupScreen> {
   final _options = ["Personal", "Business", "House Shifting"];
 
   String? option = "Personal";
+
+  bool isSuccess = false;
 
   @override
   void initState() {
@@ -221,8 +226,18 @@ class _SignupScreenState extends State<SignupScreen> {
           ].column(crossAlignment: CrossAxisAlignment.start))
               .make(),
           MaterialButton(
-            onPressed: () {
-              // print(_phoneController.text);
+            onPressed: () async {
+              isSuccess = await _signupController.signup(
+                  _emailController.text,
+                  _nameController.text,
+                  _phoneController.text,
+                  option!,
+                  _gstController.text,
+                  'uuid');
+              if (isSuccess) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/mainmenu', (Route<dynamic> route) => false);
+              }
             },
             shape: RoundedRectangleBorder(
                 side: const BorderSide(

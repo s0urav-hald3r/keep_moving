@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
+import 'package:keep_moving/controller/otp_controller.dart';
 import 'package:keep_moving/screens/otp_screen/otp_verified.dart';
 import 'package:lottie/lottie.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class OTPreceived extends StatefulWidget {
-  const OTPreceived({Key? key}) : super(key: key);
+  final String? phone;
+  const OTPreceived({Key? key, @required this.phone}) : super(key: key);
 
   @override
   State<OTPreceived> createState() => _OTPreceivedState();
 }
 
 class _OTPreceivedState extends State<OTPreceived> {
+  final OTPController _otpController = Get.put(OTPController());
   NumberFormat formatter = NumberFormat("00");
 
   TextEditingController otp1 = TextEditingController();
   TextEditingController otp2 = TextEditingController();
   TextEditingController otp3 = TextEditingController();
   TextEditingController otp4 = TextEditingController();
+  TextEditingController otp5 = TextEditingController();
+  TextEditingController otp6 = TextEditingController();
 
   final formGlobalKey = GlobalKey<FormState>();
 
@@ -29,6 +35,8 @@ class _OTPreceivedState extends State<OTPreceived> {
     otp2 = TextEditingController();
     otp3 = TextEditingController();
     otp4 = TextEditingController();
+    otp5 = TextEditingController();
+    otp6 = TextEditingController();
   }
 
   @override
@@ -37,6 +45,8 @@ class _OTPreceivedState extends State<OTPreceived> {
     otp2.dispose();
     otp3.dispose();
     otp4.dispose();
+    otp5.dispose();
+    otp6.dispose();
     super.dispose();
   }
 
@@ -64,12 +74,22 @@ class _OTPreceivedState extends State<OTPreceived> {
                 otpField(otp2, false, 2),
                 otpField(otp3, false, 3),
                 otpField(otp4, false, 4),
+                otpField(otp5, false, 5),
+                otpField(otp6, false, 6),
               ].row(alignment: MainAxisAlignment.spaceEvenly))
                   .make()
                   .py20()
                   .wFull(context),
               MaterialButton(
-                onPressed: () {
+                onPressed: () async {
+                  await _otpController.otpVerify(
+                      widget.phone!,
+                      otp1.text +
+                          otp2.text +
+                          otp3.text +
+                          otp4.text +
+                          otp5.text +
+                          otp6.text);
                   context.nextPage(const OTPverified());
                 },
                 shape: RoundedRectangleBorder(
@@ -128,7 +148,7 @@ class _OTPreceivedState extends State<OTPreceived> {
         ),
         onChanged: (value) {
           if (value.length == 1) {
-            if (counter != 4) {
+            if (counter != 6) {
               FocusScope.of(context).nextFocus();
             }
           }

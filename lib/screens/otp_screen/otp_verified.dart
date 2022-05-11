@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keep_moving/screens/home_screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -30,6 +31,7 @@ class _OTPverifiedState extends State<OTPverified> {
               onPressed: () {
                 // Navigator.of(context).pushNamedAndRemoveUntil(
                 //     '/home', (Route<dynamic> route) => false);
+                context.nextPage(const HomeScreen());
               },
               shape: RoundedRectangleBorder(
                   side: const BorderSide(

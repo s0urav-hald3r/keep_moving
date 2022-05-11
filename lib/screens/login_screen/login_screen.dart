@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 import 'package:keep_moving/screens/otp_screen/otp_screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import '../../controller/login_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -11,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final LoginController _loginController = Get.put(LoginController());
   late TextEditingController _phoneController = TextEditingController();
 
   @override
@@ -66,11 +70,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: const BorderRadius.all(Radius.circular(5)),
                 ),
               ),
+              
             ),
             MaterialButton(
-              onPressed: () {
-                // print(_phoneController.text);
-                context.nextPage(const OTPreceived());
+              onPressed: () async {
+                await _loginController.login(_phoneController.text);
+                context.nextPage(OTPreceived(phone: _phoneController.text));
               },
               shape: RoundedRectangleBorder(
                   side: const BorderSide(

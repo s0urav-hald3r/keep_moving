@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   velocity_x: ^3.4.0
   lottie:
+  get: ^4.6.1
+  http: ^0.13.4
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
