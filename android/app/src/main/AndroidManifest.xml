@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.keep_moving">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="keep_moving"
+        android:label="Keep Moving"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
